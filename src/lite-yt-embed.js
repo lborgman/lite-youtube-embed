@@ -58,7 +58,11 @@ class LiteYTEmbed extends HTMLElement {
         this.addEventListener('click', e => this.addIframe());
 
         // Tell ready.
-        window.dispatchEvent(new Event(`lite-yt-${this.videoId}`));
+        const img = new Image();
+        img.onload = () => {
+            window.dispatchEvent(new Event(`lite-yt-${this.videoId}`));
+        }
+        img.src = this.style.backgroundImage;
     }
 
     // // TODO: Support the the user changing the [videoid] attribute
