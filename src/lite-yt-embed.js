@@ -17,6 +17,8 @@ class LiteYTEmbed extends HTMLElement {
         // Gotta encode the untrusted value
         // https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#rule-2---attribute-escape-before-inserting-untrusted-data-into-html-common-attributes
         this.videoId = encodeURIComponent(this.getAttribute('videoid'));
+        this.videoParams = encodeURIComponent(this.getAttribute('videoparams'));
+        this.useNoCookie = encodeURIComponent(this.getAttribute('nocookie'));
 
         /**
          * Lo, the youtube placeholder image!  (aka the thumbnail, poster image, etc)
@@ -99,10 +101,12 @@ class LiteYTEmbed extends HTMLElement {
     }
 
     addIframe(){
+        let useP = "autoplay=1";
+        if (this.videoParams) { useP = this.videoParams.replace(/^[?&]/, ""); }
         const iframeHTML = `
 <iframe width="560" height="315" frameborder="0"
   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
-  src="https://www.youtube-nocookie.com/embed/${this.videoId}?autoplay=1"
+  src="https://www.youtube-nocookie.com/embed/${this.videoId}?${useP}"
 ></iframe>`;
         this.insertAdjacentHTML('beforeend', iframeHTML);
         this.classList.add('lyt-activated');
