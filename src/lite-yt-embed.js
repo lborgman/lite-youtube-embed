@@ -56,6 +56,9 @@ class LiteYTEmbed extends HTMLElement {
         // TODO: In the future we could be like amp-youtube and silently swap in the iframe during idle time
         //   We'd want to only do this for in-viewport or near-viewport ones: https://github.com/ampproject/amphtml/pull/5003
         this.addEventListener('click', e => this.addIframe());
+
+        // Tell ready.
+        window.dispatchEvent(new Event(`lite-yt-${this.videoId}`));
     }
 
     // // TODO: Support the the user changing the [videoid] attribute
