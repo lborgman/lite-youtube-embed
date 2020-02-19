@@ -19,9 +19,24 @@ if (!customElements.get("lite-youtube")) {
 
             // Gotta encode the untrusted value
             // https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#rule-2---attribute-escape-before-inserting-untrusted-data-into-html-common-attributes
+            // Hm, there are no untrusted values here, or?
             this.videoId = encodeURIComponent(this.getAttribute('videoid'));
-            this.videoParams = encodeURIComponent(this.getAttribute('videoparams'));
             this.useNoCookie = encodeURIComponent(this.getAttribute('nocookie'));
+
+            this.videoParams = this.getAttribute('videoparams');
+            this.useP = "autoplay=1";
+            if (this.videoParams) {
+                this.useP = this.useP + "&" + this.videoParams.replace(/^[?&]/, "");
+            }
+
+            this.enableJsAPI = this.useP.split("&").includes("enablejsapi=1");
+            console.log("enableJsAPI", this.enableJsAPI)
+            if (this.enableJsAPI) {
+                if (typeof liteYTLoadYouTubeAPI !== "function") {
+                    throw Error("Please define the function liteYTLoadYouTubeAPI to if you use enablejsapi=1");
+                }
+            }
+
 
             /**
              * Lo, the youtube placeholder image!  (aka the thumbnail, poster image, etc)
@@ -111,14 +126,19 @@ if (!customElements.get("lite-youtube")) {
         }
 
         addIframe() {
-            let useP = "autoplay=1";
-            if (this.videoParams) { useP = this.videoParams.replace(/^[?&]/, ""); }
-            const iframeHTML = `
-<iframe width="560" height="315" frameborder="0"
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
-  src="https://www.youtube-nocookie.com/embed/${this.videoId}?${useP}"
-></iframe>`;
-            this.insertAdjacentHTML('beforeend', iframeHTML);
+            const iframe = document.createElement("iframe");
+            iframe.setAttribute("width", 560);
+            iframe.setAttribute("height", 315);
+            iframe.setAttribute("frameborder", 0);
+            iframe.setAttribute("allow",
+                "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture");
+            iframe.setAttribute("allowfullscreen", "");
+            iframe.setAttribute("src", `https://www.youtube.com/embed/${this.videoId}?${this.useP}`);
+            console.log(iframe);
+            this.appendChild(iframe);
+
+            if (this.enableJsAPI) liteYTLoadYouTubeAPI(iframe);
+
             this.classList.add('lyt-activated');
         }
     }
