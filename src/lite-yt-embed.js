@@ -32,7 +32,7 @@ if (!customElements.get("lite-youtube")) {
             this.enableJsAPI = this.useP.split("&").includes("enablejsapi=1");
             console.log("enableJsAPI constructor", this.enableJsAPI);
             console.log("typeof liteYTLoadYouTubeAPI", typeof liteYTLoadYouTubeAPI);
-            setTimeout(() => { console.log("typeof liteYTLoadYouTubeAPI", typeof liteYTLoadYouTubeAPI); }, 1000);
+            setTimeout(() => { console.log("typeof liteYTLoadYouTubeAPI in timer", typeof liteYTLoadYouTubeAPI); }, 1000);
 
             // This can not be done immediately.
             if (this.enableJsAPI) {
