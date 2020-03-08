@@ -30,11 +30,17 @@ if (!customElements.get("lite-youtube")) {
             }
 
             this.enableJsAPI = this.useP.split("&").includes("enablejsapi=1");
-            console.log("enableJsAPI", this.enableJsAPI)
+            console.log("enableJsAPI constructor", this.enableJsAPI);
+            console.log("typeof liteYTLoadYouTubeAPI", typeof liteYTLoadYouTubeAPI);
+            setTimeout(() => { console.log("typeof liteYTLoadYouTubeAPI", typeof liteYTLoadYouTubeAPI); }, 1000);
+
+            // This can not be done immediately.
             if (this.enableJsAPI) {
-                if (typeof liteYTLoadYouTubeAPI !== "function") {
-                    throw Error("Please define the function liteYTLoadYouTubeAPI to if you use enablejsapi=1");
-                }
+                setTimeout(() => {
+                    if (typeof liteYTLoadYouTubeAPI !== "function") {
+                        throw Error("Please define the function liteYTLoadYouTubeAPI to if you use enablejsapi=1");
+                    }
+                }, 2000);
             }
 
 
