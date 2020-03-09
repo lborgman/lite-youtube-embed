@@ -146,7 +146,8 @@ if (!customElements.get("lite-youtube")) {
             console.log(iframe);
             this.appendChild(iframe);
 
-            if (this.enableJsAPI) liteYTLoadYouTubeAPI(iframe);
+            // We must tell the video Id here, I think:
+            if (this.enableJsAPI) liteYTLoadYouTubeAPI(iframe, this.videoId);
 
             this.classList.add('lyt-activated');
         }
