@@ -31,8 +31,8 @@ if (!customElements.get("lite-youtube")) {
 
             this.enableJsAPI = this.useP.split("&").includes("enablejsapi=1");
             console.log("enableJsAPI constructor", this.enableJsAPI);
-            console.log("typeof liteYTLoadYouTubeAPI", typeof liteYTLoadYouTubeAPI);
-            setTimeout(() => { console.log("typeof liteYTLoadYouTubeAPI in timer", typeof liteYTLoadYouTubeAPI); }, 1000);
+            // console.log("typeof liteYTLoadYouTubeAPI", typeof liteYTLoadYouTubeAPI);
+            // setTimeout(() => { console.log("typeof liteYTLoadYouTubeAPI in timer", typeof liteYTLoadYouTubeAPI); }, 1000);
 
             // This can not be done immediately.
             if (this.enableJsAPI) {
@@ -143,7 +143,7 @@ if (!customElements.get("lite-youtube")) {
                 "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture");
             iframe.setAttribute("allowfullscreen", "");
             iframe.setAttribute("src", `https://www.youtube.com/embed/${this.videoId}?${this.useP}`);
-            console.log(iframe);
+            // console.log(iframe);
             this.appendChild(iframe);
 
             // We must tell the video Id here, I think:
