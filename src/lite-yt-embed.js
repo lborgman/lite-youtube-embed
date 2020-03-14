@@ -159,7 +159,6 @@ if (!customElements.get("lite-youtube")) {
                         }));
             }
 
-
             this.classList.add('lyt-activated');
         }
     }
