@@ -31,17 +31,17 @@ if (!customElements.get("lite-youtube")) {
 
             this.enableJsAPI = this.useP.split("&").includes("enablejsapi=1");
             console.log("enableJsAPI constructor", this.enableJsAPI);
-            // console.log("typeof liteYTLoadYouTubeAPI", typeof liteYTLoadYouTubeAPI);
-            // setTimeout(() => { console.log("typeof liteYTLoadYouTubeAPI in timer", typeof liteYTLoadYouTubeAPI); }, 1000);
 
             // This can not be done immediately.
+            /*
             if (this.enableJsAPI) {
                 setTimeout(() => {
                     if (typeof liteYTLoadYouTubeAPI !== "function") {
-                        throw Error("Please define the function liteYTLoadYouTubeAPI to if you use enablejsapi=1");
+                        throw Error("Please define the function liteYTLoadYouTubeAPI if you use enablejsapi=1");
                     }
                 }, 2000);
             }
+            */
 
 
             /**
@@ -147,7 +147,18 @@ if (!customElements.get("lite-youtube")) {
             this.appendChild(iframe);
 
             // We must tell the video Id here, I think:
-            if (this.enableJsAPI) liteYTLoadYouTubeAPI(iframe, this.videoId);
+            if (this.enableJsAPI) {
+                // liteYTLoadYouTubeAPI(iframe, this.videoId);
+                window.dispatchEvent(
+                    new CustomEvent("lite-yt-embed-load-youtube-api",
+                        {
+                            detail: {
+                                iframe,
+                                videoId: this.videoId,
+                            }
+                        }));
+            }
+
 
             this.classList.add('lyt-activated');
         }
