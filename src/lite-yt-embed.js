@@ -32,17 +32,6 @@ if (!customElements.get("lite-youtube")) {
             this.enableJsAPI = this.useP.split("&").includes("enablejsapi=1");
             console.log("enableJsAPI constructor", this.enableJsAPI);
 
-            // This can not be done immediately.
-            /*
-            if (this.enableJsAPI) {
-                setTimeout(() => {
-                    if (typeof liteYTLoadYouTubeAPI !== "function") {
-                        throw Error("Please define the function liteYTLoadYouTubeAPI if you use enablejsapi=1");
-                    }
-                }, 2000);
-            }
-            */
-
 
             /**
              * Lo, the youtube placeholder image!  (aka the thumbnail, poster image, etc)
@@ -148,9 +137,9 @@ if (!customElements.get("lite-youtube")) {
 
             // We must tell the video Id here, I think:
             if (this.enableJsAPI) {
-                // liteYTLoadYouTubeAPI(iframe, this.videoId);
+                console.warn("lite-yt-embed-youtube-api-detail dispatch")
                 window.dispatchEvent(
-                    new CustomEvent("lite-yt-embed-load-youtube-api",
+                    new CustomEvent("lite-yt-embed-youtube-api-detail",
                         {
                             detail: {
                                 iframe,
